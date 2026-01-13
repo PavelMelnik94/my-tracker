@@ -1,0 +1,24 @@
+{
+  "name": "Health Tracker",
+  "short_name": "Health Tracker",
+  "description": "Приложение для отслеживания здоровья, питания и прогресса",
+  "start_url": "/my-tracker/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#10b981",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "/my-tracker/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/my-tracker/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}
