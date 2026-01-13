@@ -299,6 +299,14 @@ body {
   color: hsl(var(--primary));
 }
 
+.border-accent-blue {
+  border-color: hsl(var(--accent-blue));
+}
+
+.text-accent-blue {
+  color: hsl(var(--accent-blue));
+}
+
 /* Borders */
 .rounded-full {
   border-radius: 9999px;

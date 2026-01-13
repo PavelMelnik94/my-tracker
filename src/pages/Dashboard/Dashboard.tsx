@@ -96,7 +96,7 @@ export const Dashboard: React.FC = () => {
             </div>
           )}
         </div>
-        <div className="glass-card p-4 mt-4 bg-gradient-to-r from-primary-50 to-accent-50 border-l-4" style={{ borderLeftColor: 'hsl(var(--accent-blue))' }}>
+        <div className="glass-card p-4 mt-4 bg-gradient-to-r from-primary-50 to-accent-50 border-l-4 border-accent-blue">
           <p className="font-medium text-foreground">{randomQuote}</p>
         </div>
       </div>

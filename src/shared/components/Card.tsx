@@ -24,7 +24,8 @@ export const Card: React.FC<CardProps> = ({
     gradient: styles.cardGradient,
   }[variant];
 
-  const hoverClass = (hover || onClick) ? styles.cardHover : '';
+  const shouldShowHover = hover === true || typeof onClick === 'function';
+  const hoverClass = shouldShowHover ? styles.cardHover : '';
   const clickableClass = onClick ? styles.cardClickable : '';
 
   return (
