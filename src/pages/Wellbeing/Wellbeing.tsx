@@ -4,6 +4,27 @@ import { Card, Button, Modal, Input, TextArea } from '../../shared/components';
 import { getTodayDate, generateId } from '../../shared/utils/date';
 import type { WellbeingEntry, MeasurementEntry } from '../../shared/types';
 
+const RatingSlider: React.FC<{
+  label: string;
+  value: number;
+  onChange: (value: number) => void;
+}> = ({ label, value, onChange }) => (
+  <div className="mb-4">
+    <div className="flex justify-between mb-2">
+      <label className="text-sm font-medium text-gray-700">{label}</label>
+      <span className="text-sm font-semibold text-primary">{value}/10</span>
+    </div>
+    <input
+      type="range"
+      min="1"
+      max="10"
+      value={value}
+      onChange={(e) => onChange(parseInt(e.target.value))}
+      className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-primary"
+    />
+  </div>
+);
+
 export const Wellbeing: React.FC = () => {
   const { wellbeing, measurements, addWellbeing, addMeasurement, updateWellbeing, updateMeasurement } =
     useHealthStore();
@@ -114,27 +135,6 @@ export const Wellbeing: React.FC = () => {
     }
     setIsMeasurementModalOpen(false);
   };
-
-  const RatingSlider: React.FC<{
-    label: string;
-    value: number;
-    onChange: (value: number) => void;
-  }> = ({ label, value, onChange }) => (
-    <div className="mb-4">
-      <div className="flex justify-between mb-2">
-        <label className="text-sm font-medium text-gray-700">{label}</label>
-        <span className="text-sm font-semibold text-primary">{value}/10</span>
-      </div>
-      <input
-        type="range"
-        min="1"
-        max="10"
-        value={value}
-        onChange={(e) => onChange(parseInt(e.target.value))}
-        className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-primary"
-      />
-    </div>
-  );
 
   return (
     <div className="max-w-4xl mx-auto p-4 pb-20">
