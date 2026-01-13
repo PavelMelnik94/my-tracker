@@ -14,8 +14,8 @@ export const Card: React.FC<CardProps> = ({
   children, 
   className = '', 
   onClick,
-  variant = 'glass',
-  hover = true,
+  variant = 'default',
+  hover = false,
   style
 }) => {
   const variantClass = {
@@ -24,7 +24,7 @@ export const Card: React.FC<CardProps> = ({
     gradient: styles.cardGradient,
   }[variant];
 
-  const hoverClass = hover ? styles.cardHover : '';
+  const hoverClass = (hover || onClick) ? styles.cardHover : '';
   const clickableClass = onClick ? styles.cardClickable : '';
 
   return (

@@ -12,12 +12,13 @@
 
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'SF Pro Text', 'Segoe UI', 'Roboto', 'Helvetica Neue', sans-serif;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'SF Pro Text', 'Segoe UI', 'Roboto', 'Helvetica Neue', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   background-color: hsl(var(--background));
   color: hsl(var(--foreground));
-  line-height: 1.5;
+  line-height: 1.6;
+  font-feature-settings: 'cv02', 'cv03', 'cv04', 'cv11';
 }
 
 /* Утилиты для безопасных зон на мобильных */
@@ -315,7 +316,7 @@ body {
   border-color: hsl(var(--primary));
 }
 
-/* Backgrounds */
+/* Backgrounds - Updated for dark theme */
 .bg-gradient-to-r {
   background-image: linear-gradient(to right, var(--tw-gradient-stops));
 }
@@ -325,16 +326,16 @@ body {
 }
 
 .from-primary-50 {
-  --tw-gradient-from: hsl(var(--accent));
+  --tw-gradient-from: hsl(var(--accent-blue) / 0.1);
   --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to, transparent);
 }
 
 .to-accent-50 {
-  --tw-gradient-to: hsl(var(--accent));
+  --tw-gradient-to: hsl(var(--accent-purple) / 0.1);
 }
 
 .from-gray-50 {
-  --tw-gradient-from: hsl(var(--muted));
+  --tw-gradient-from: hsl(var(--muted) / 0.3);
   --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to, transparent);
 }
 
@@ -343,47 +344,47 @@ body {
 }
 
 .from-yellow-50 {
-  --tw-gradient-from: hsl(38 92% 95%);
+  --tw-gradient-from: hsl(var(--accent-yellow) / 0.1);
   --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to, transparent);
 }
 
 .to-amber-50 {
-  --tw-gradient-to: hsl(38 92% 95%);
+  --tw-gradient-to: hsl(var(--accent-orange) / 0.1);
 }
 
 .from-purple-50 {
-  --tw-gradient-from: hsl(270 60% 95%);
+  --tw-gradient-from: hsl(var(--accent-purple) / 0.1);
   --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to, transparent);
 }
 
 .to-indigo-50 {
-  --tw-gradient-to: hsl(240 60% 95%);
+  --tw-gradient-to: hsl(var(--accent-blue) / 0.15);
 }
 
 .from-pink-50 {
-  --tw-gradient-from: hsl(340 75% 95%);
+  --tw-gradient-from: hsl(var(--accent-pink) / 0.1);
   --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to, transparent);
 }
 
 .to-rose-50 {
-  --tw-gradient-to: hsl(350 75% 95%);
+  --tw-gradient-to: hsl(var(--accent-pink) / 0.15);
 }
 
 .from-blue-50 {
-  --tw-gradient-from: hsl(210 75% 95%);
+  --tw-gradient-from: hsl(var(--accent-blue) / 0.1);
   --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to, transparent);
 }
 
 .to-cyan-50 {
-  --tw-gradient-to: hsl(190 75% 95%);
+  --tw-gradient-to: hsl(var(--accent-blue) / 0.15);
 }
 
 .hover\\:from-primary-50:hover {
-  --tw-gradient-from: hsl(var(--accent));
+  --tw-gradient-from: hsl(var(--accent-blue) / 0.15);
 }
 
 .hover\\:from-accent-50:hover {
-  --tw-gradient-from: hsl(var(--accent));
+  --tw-gradient-from: hsl(var(--accent-purple) / 0.15);
 }
 
 /* Display */
@@ -429,25 +430,24 @@ body {
   transition-duration: 0.3s;
 }
 
-/* Старые классы для обратной совместимости */
+/* Modern utility classes */
 .glass-card {
-  background-color: hsl(var(--card) / 0.8);
-  backdrop-filter: blur(24px);
-  -webkit-backdrop-filter: blur(24px);
-  border-radius: calc(var(--radius) * 2);
-  box-shadow: var(--shadow-md);
+  background-color: hsl(var(--card) / 0.5);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-radius: var(--radius);
   border: 1px solid hsl(var(--border));
 }
 
 .gradient-text {
-  background: linear-gradient(to right, hsl(var(--primary)), hsl(var(--primary) / 0.7));
+  background: linear-gradient(to right, hsl(var(--accent-blue)), hsl(var(--accent-purple)));
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
 }
 
 .bg-gradient-primary {
-  background: linear-gradient(135deg, hsl(var(--primary)) 0%, hsl(var(--primary) / 0.8) 100%);
+  background: linear-gradient(135deg, hsl(var(--accent-blue) / 0.2) 0%, hsl(var(--accent-purple) / 0.1) 100%);
 }
 
 /* Анимации */
