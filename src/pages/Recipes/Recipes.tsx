@@ -1,4 +1,4 @@
-import React, { useState, useMemo, useEffect } from 'react';
+import React, { useState, useMemo, useEffect, useRef } from 'react';
 import { useHealthStore } from '../../store/healthStore';
 import { initialRecipes } from '../../store/initialRecipes';
 import { Card, Button, Modal } from '../../shared/components';
@@ -9,13 +9,15 @@ export const Recipes: React.FC = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState<Recipe['category'] | 'all'>('all');
   const [selectedRecipe, setSelectedRecipe] = useState<Recipe | null>(null);
+  const initialized = useRef(false);
 
   // Initialize recipes if empty
   useEffect(() => {
-    if (recipes.length === 0) {
+    if (!initialized.current && recipes.length === 0) {
+      initialized.current = true;
       initialRecipes.forEach((recipe) => addRecipe(recipe));
     }
-  }, []);
+  }, [recipes.length, addRecipe]);
 
   const filteredRecipes = useMemo(() => {
     return recipes.filter((recipe) => {

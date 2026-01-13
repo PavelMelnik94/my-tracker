@@ -9,7 +9,7 @@ import { BottomNav } from './shared/components/BottomNav';
 
 function App() {
   return (
-    <Router>
+    <Router basename="/my-tracker">
       <div className="min-h-screen bg-gray-50">
         <Routes>
           <Route path="/" element={<Dashboard />} />
