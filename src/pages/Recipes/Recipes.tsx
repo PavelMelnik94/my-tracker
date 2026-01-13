@@ -1,14 +1,20 @@
 import React, { useState, useMemo, useEffect, useRef } from 'react';
-import { useHealthStore } from '../../store/healthStore';
-import { initialRecipes } from '../../store/initialRecipes';
-import { Card, Button, Modal, Input } from '../../shared/components';
-import type { Recipe } from '../../types';
+import { useHealthStore } from '../../entities/health';
+import { initialRecipes } from '../../entities/recipes';
+import { Card, CardHeader, CardTitle, CardContent } from '../../shared/ui/card';
+import { Button } from '../../shared/ui/button';
+import { Input } from '../../shared/ui/input';
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from '../../shared/ui/dialog';
+import { Search, Flame, Beef, Droplet, Wheat, ChefHat, UtensilsCrossed, Check } from 'lucide-react';
+import type { Recipe } from '../../shared/types';
+import { cn } from '../../shared/lib/utils';
 
 export const Recipes: React.FC = () => {
-  const { recipes, addRecipe } = useHealthStore();
+  const { recipes, addRecipe, trackRecipeCooked } = useHealthStore();
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState<Recipe['category'] | 'all'>('all');
   const [selectedRecipe, setSelectedRecipe] = useState<Recipe | null>(null);
+  const [cookedSuccess, setCookedSuccess] = useState(false);
   const initialized = useRef(false);
 
   // Initialize recipes if empty
@@ -36,135 +42,136 @@ export const Recipes: React.FC = () => {
     snack: 'Перекусы',
   };
 
-  const categoryIcons: Record<Recipe['category'], string> = {
-    breakfast: '🌅',
-    lunch: '🍜',
-    dinner: '🌙',
-    snack: '🍎',
-  };
-
-  const categoryColors: Record<Recipe['category'], string> = {
-    breakfast: 'from-yellow-400 to-orange-500',
-    lunch: 'from-green-400 to-emerald-500',
-    dinner: 'from-purple-400 to-indigo-500',
-    snack: 'from-pink-400 to-rose-500',
-  };
-
-  const categories: Array<{ value: Recipe['category'] | 'all'; label: string; icon: string }> = [
-    { value: 'all', label: 'Все', icon: '🥗' },
-    { value: 'breakfast', label: 'Завтраки', icon: '🌅' },
-    { value: 'lunch', label: 'Обеды', icon: '🍜' },
-    { value: 'dinner', label: 'Ужины', icon: '🌙' },
-    { value: 'snack', label: 'Перекусы', icon: '🍎' },
+  const categories: Array<{ value: Recipe['category'] | 'all'; label: string }> = [
+    { value: 'all', label: 'Все' },
+    { value: 'breakfast', label: 'Завтраки' },
+    { value: 'lunch', label: 'Обеды' },
+    { value: 'dinner', label: 'Ужины' },
+    { value: 'snack', label: 'Перекусы' },
   ];
 
+  const handleCookedAndAte = () => {
+    if (selectedRecipe) {
+      trackRecipeCooked(selectedRecipe);
+      setCookedSuccess(true);
+      setTimeout(() => {
+        setCookedSuccess(false);
+        setSelectedRecipe(null);
+      }, 1500);
+    }
+  };
+
   return (
-    <div className="max-w-4xl mx-auto p-4 pb-24 animate-fade-in">
+    <div className="max-w-4xl mx-auto p-4 pb-24">
       {/* Header */}
       <div className="mb-6">
-        <h1 className="text-3xl font-bold text-gray-800 flex items-center gap-3">
-          <span className="text-4xl">🥗</span>
+        <h1 className="text-3xl font-bold flex items-center gap-3">
+          <ChefHat className="w-8 h-8" />
           Рецепты
         </h1>
-        <p className="text-gray-600 mt-1">Здоровая еда на каждый день</p>
+        <p className="text-muted-foreground mt-1">Здоровая еда на каждый день</p>
       </div>
 
-      {/* Search and filters */}
+      {/* Search */}
       <div className="mb-6">
         <Input
           type="text"
           placeholder="Поиск по названию или ингредиентам..."
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
-          icon="🔍"
-          className="mb-4"
+          icon={<Search className="w-4 h-4" />}
         />
 
         {/* Category filters */}
-        <div className="flex gap-3 overflow-x-auto pb-2">
+        <div className="flex gap-3 overflow-x-auto pb-2 mt-4">
           {categories.map((cat) => (
-            <button
+            <Button
               key={cat.value}
               onClick={() => setSelectedCategory(cat.value)}
-              className={`px-5 py-2.5 rounded-xl whitespace-nowrap font-semibold transition-all duration-300 flex items-center gap-2 ${
-                selectedCategory === cat.value
-                  ? 'bg-gradient-to-r from-primary-500 to-primary-600 text-white shadow-lg scale-105'
-                  : 'bg-white/80 backdrop-blur-sm text-gray-700 hover:bg-gray-100 border border-gray-200'
-              }`}
+              variant={selectedCategory === cat.value ? 'default' : 'outline'}
+              size="sm"
+              className="whitespace-nowrap"
             >
-              <span className="text-xl">{cat.icon}</span>
               {cat.label}
-            </button>
+            </Button>
           ))}
         </div>
       </div>
 
       {/* Recipes count */}
       <div className="flex items-center justify-between mb-6">
-        <p className="text-sm text-gray-600 font-medium">
-          Найдено рецептов: <span className="text-primary-600 font-bold">{filteredRecipes.length}</span>
+        <p className="text-sm text-muted-foreground font-medium">
+          Найдено рецептов: <span className="text-primary font-bold">{filteredRecipes.length}</span>
         </p>
       </div>
 
       {/* Recipes grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
         {filteredRecipes.length === 0 ? (
-          <Card className="col-span-full text-center py-12">
-            <div className="text-6xl mb-4">🔍</div>
-            <p className="text-gray-500 text-lg">Рецепты не найдены</p>
+          <Card className="col-span-full">
+            <CardContent className="text-center py-12">
+              <Search className="w-16 h-16 mx-auto mb-4 text-muted-foreground" />
+              <p className="text-muted-foreground text-lg">Рецепты не найдены</p>
+            </CardContent>
           </Card>
         ) : (
-          filteredRecipes.map((recipe, index) => (
+          filteredRecipes.map((recipe) => (
             <Card
               key={recipe.id}
               onClick={() => setSelectedRecipe(recipe)}
-              className="cursor-pointer animate-slide-up"
-              style={{ animationDelay: `${index * 0.05}s` }}
+              className="cursor-pointer hover:shadow-lg transition-shadow"
             >
-              {/* Category badge */}
-              <div className="mb-3 flex items-center gap-2">
-                <span className={`inline-flex items-center gap-1.5 px-3 py-1.5 text-sm font-bold bg-gradient-to-r ${categoryColors[recipe.category]} text-white rounded-full shadow-md`}>
-                  {categoryIcons[recipe.category]}
-                  {categoryLabels[recipe.category]}
-                </span>
-              </div>
-
-              <h3 className="text-xl font-bold text-gray-800 mb-3 hover:text-primary-600 transition-colors">
-                {recipe.name}
-              </h3>
-
-              {/* Nutrition info */}
-              <div className="grid grid-cols-4 gap-2 mb-4">
-                <div className="text-center p-2 rounded-lg bg-gradient-to-br from-orange-50 to-red-50">
-                  <div className="text-lg font-bold text-gray-800">{recipe.calories}</div>
-                  <div className="text-xs text-gray-600">ккал</div>
+              <CardHeader>
+                <div className="mb-2">
+                  <span className="inline-flex items-center gap-1.5 px-3 py-1 text-xs font-semibold bg-primary text-primary-foreground rounded-full">
+                    {categoryLabels[recipe.category]}
+                  </span>
                 </div>
-                <div className="text-center p-2 rounded-lg bg-gradient-to-br from-blue-50 to-cyan-50">
-                  <div className="text-lg font-bold text-gray-800">{recipe.protein}г</div>
-                  <div className="text-xs text-gray-600">белки</div>
-                </div>
-                <div className="text-center p-2 rounded-lg bg-gradient-to-br from-yellow-50 to-amber-50">
-                  <div className="text-lg font-bold text-gray-800">{recipe.fats}г</div>
-                  <div className="text-xs text-gray-600">жиры</div>
-                </div>
-                <div className="text-center p-2 rounded-lg bg-gradient-to-br from-green-50 to-emerald-50">
-                  <div className="text-lg font-bold text-gray-800">{recipe.carbs}г</div>
-                  <div className="text-xs text-gray-600">углев.</div>
-                </div>
-              </div>
+                <CardTitle className="text-xl">{recipe.name}</CardTitle>
+              </CardHeader>
 
-              {/* Ingredients preview */}
-              <div className="flex items-start gap-2 text-sm text-gray-600">
-                <span className="text-lg">🥘</span>
-                <p className="flex-1">
-                  {recipe.ingredients.slice(0, 3).join(', ')}
-                  {recipe.ingredients.length > 3 && '...'}
-                </p>
-              </div>
+              <CardContent>
+                {/* Nutrition info */}
+                <div className="grid grid-cols-4 gap-2 mb-4">
+                  <div className="text-center p-2 rounded-lg bg-muted/50">
+                    <div className="flex items-center justify-center mb-1">
+                      <Flame className="w-4 h-4 text-orange-500" />
+                    </div>
+                    <div className="text-sm font-bold">{recipe.calories}</div>
+                    <div className="text-xs text-muted-foreground">ккал</div>
+                  </div>
+                  <div className="text-center p-2 rounded-lg bg-muted/50">
+                    <div className="flex items-center justify-center mb-1">
+                      <Beef className="w-4 h-4 text-blue-500" />
+                    </div>
+                    <div className="text-sm font-bold">{recipe.protein}г</div>
+                    <div className="text-xs text-muted-foreground">белки</div>
+                  </div>
+                  <div className="text-center p-2 rounded-lg bg-muted/50">
+                    <div className="flex items-center justify-center mb-1">
+                      <Droplet className="w-4 h-4 text-yellow-500" />
+                    </div>
+                    <div className="text-sm font-bold">{recipe.fats}г</div>
+                    <div className="text-xs text-muted-foreground">жиры</div>
+                  </div>
+                  <div className="text-center p-2 rounded-lg bg-muted/50">
+                    <div className="flex items-center justify-center mb-1">
+                      <Wheat className="w-4 h-4 text-green-500" />
+                    </div>
+                    <div className="text-sm font-bold">{recipe.carbs}г</div>
+                    <div className="text-xs text-muted-foreground">углев.</div>
+                  </div>
+                </div>
 
-              <div className="mt-3 text-sm text-primary-600 font-semibold flex items-center gap-1">
-                Подробнее →
-              </div>
+                {/* Ingredients preview */}
+                <div className="flex items-start gap-2 text-sm text-muted-foreground">
+                  <UtensilsCrossed className="w-4 h-4 mt-0.5 flex-shrink-0" />
+                  <p className="flex-1">
+                    {recipe.ingredients.slice(0, 3).join(', ')}
+                    {recipe.ingredients.length > 3 && '...'}
+                  </p>
+                </div>
+              </CardContent>
             </Card>
           ))
         )}
@@ -172,86 +179,104 @@ export const Recipes: React.FC = () => {
 
       {/* Recipe detail modal */}
       {selectedRecipe && (
-        <Modal
-          isOpen={!!selectedRecipe}
-          onClose={() => setSelectedRecipe(null)}
-          title={selectedRecipe.name}
-        >
-          <div>
-            <div className="mb-4">
-              <span className={`inline-flex items-center gap-1.5 px-3 py-1.5 text-sm font-bold bg-gradient-to-r ${categoryColors[selectedRecipe.category]} text-white rounded-full shadow-md`}>
-                {categoryIcons[selectedRecipe.category]}
-                {categoryLabels[selectedRecipe.category]}
-              </span>
+        <Dialog open={!!selectedRecipe} onOpenChange={() => setSelectedRecipe(null)}>
+          <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
+            <DialogHeader>
+              <DialogTitle className="text-2xl pr-8">{selectedRecipe.name}</DialogTitle>
+              <div className="mt-2">
+                <span className="inline-flex items-center gap-1.5 px-3 py-1 text-sm font-semibold bg-primary text-primary-foreground rounded-full">
+                  {categoryLabels[selectedRecipe.category]}
+                </span>
+              </div>
+            </DialogHeader>
+
+            <div className="space-y-6">
+              {/* Nutrition info */}
+              <div className="grid grid-cols-4 gap-3">
+                <div className="text-center p-4 rounded-xl bg-muted/50">
+                  <Flame className="w-6 h-6 mx-auto mb-2 text-orange-500" />
+                  <div className="text-2xl font-bold">{selectedRecipe.calories}</div>
+                  <div className="text-xs text-muted-foreground font-medium mt-1">ккал</div>
+                </div>
+                <div className="text-center p-4 rounded-xl bg-muted/50">
+                  <Beef className="w-6 h-6 mx-auto mb-2 text-blue-500" />
+                  <div className="text-2xl font-bold">{selectedRecipe.protein}г</div>
+                  <div className="text-xs text-muted-foreground font-medium mt-1">белки</div>
+                </div>
+                <div className="text-center p-4 rounded-xl bg-muted/50">
+                  <Droplet className="w-6 h-6 mx-auto mb-2 text-yellow-500" />
+                  <div className="text-2xl font-bold">{selectedRecipe.fats}г</div>
+                  <div className="text-xs text-muted-foreground font-medium mt-1">жиры</div>
+                </div>
+                <div className="text-center p-4 rounded-xl bg-muted/50">
+                  <Wheat className="w-6 h-6 mx-auto mb-2 text-green-500" />
+                  <div className="text-2xl font-bold">{selectedRecipe.carbs}г</div>
+                  <div className="text-xs text-muted-foreground font-medium mt-1">углеводы</div>
+                </div>
+              </div>
+
+              {/* Ingredients */}
+              <div className="p-4 rounded-xl bg-muted/30">
+                <h3 className="font-bold mb-3 flex items-center gap-2 text-lg">
+                  <UtensilsCrossed className="w-5 h-5" />
+                  Ингредиенты
+                </h3>
+                <ul className="space-y-2">
+                  {selectedRecipe.ingredients.map((ingredient, index) => (
+                    <li key={index} className="text-sm flex items-start gap-2">
+                      <span className="text-primary font-bold mt-0.5">•</span>
+                      <span>{ingredient}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+
+              {/* Steps */}
+              <div className="p-4 rounded-xl bg-muted/30">
+                <h3 className="font-bold mb-3 flex items-center gap-2 text-lg">
+                  <ChefHat className="w-5 h-5" />
+                  Приготовление
+                </h3>
+                <ol className="space-y-3">
+                  {selectedRecipe.steps.map((step, index) => (
+                    <li key={index} className="text-sm flex items-start gap-3">
+                      <span className="flex-shrink-0 w-6 h-6 rounded-full bg-primary text-primary-foreground flex items-center justify-center font-bold text-xs">
+                        {index + 1}
+                      </span>
+                      <span className="flex-1 pt-0.5">{step}</span>
+                    </li>
+                  ))}
+                </ol>
+              </div>
             </div>
 
-            {/* Nutrition info */}
-            <div className="grid grid-cols-4 gap-3 mb-6">
-              <div className="text-center p-4 rounded-xl bg-gradient-to-br from-orange-50 to-red-50">
-                <div className="text-2xl font-bold bg-gradient-to-r from-orange-600 to-red-600 bg-clip-text text-transparent">
-                  {selectedRecipe.calories}
-                </div>
-                <div className="text-xs text-gray-600 font-medium mt-1">ккал</div>
-              </div>
-              <div className="text-center p-4 rounded-xl bg-gradient-to-br from-blue-50 to-cyan-50">
-                <div className="text-2xl font-bold bg-gradient-to-r from-blue-600 to-cyan-600 bg-clip-text text-transparent">
-                  {selectedRecipe.protein}г
-                </div>
-                <div className="text-xs text-gray-600 font-medium mt-1">белки</div>
-              </div>
-              <div className="text-center p-4 rounded-xl bg-gradient-to-br from-yellow-50 to-amber-50">
-                <div className="text-2xl font-bold bg-gradient-to-r from-yellow-600 to-amber-600 bg-clip-text text-transparent">
-                  {selectedRecipe.fats}г
-                </div>
-                <div className="text-xs text-gray-600 font-medium mt-1">жиры</div>
-              </div>
-              <div className="text-center p-4 rounded-xl bg-gradient-to-br from-green-50 to-emerald-50">
-                <div className="text-2xl font-bold bg-gradient-to-r from-green-600 to-emerald-600 bg-clip-text text-transparent">
-                  {selectedRecipe.carbs}г
-                </div>
-                <div className="text-xs text-gray-600 font-medium mt-1">углеводы</div>
-              </div>
-            </div>
-
-            {/* Ingredients */}
-            <div className="mb-6 p-4 rounded-xl bg-gradient-to-br from-gray-50 to-transparent">
-              <h3 className="font-bold text-gray-800 mb-3 flex items-center gap-2 text-lg">
-                <span className="text-2xl">🥘</span>
-                Ингредиенты
-              </h3>
-              <ul className="space-y-2">
-                {selectedRecipe.ingredients.map((ingredient, index) => (
-                  <li key={index} className="text-sm text-gray-700 flex items-start gap-2">
-                    <span className="text-primary-500 font-bold mt-0.5">•</span>
-                    <span>{ingredient}</span>
-                  </li>
-                ))}
-              </ul>
-            </div>
-
-            {/* Steps */}
-            <div className="mb-6 p-4 rounded-xl bg-gradient-to-br from-primary-50 to-transparent">
-              <h3 className="font-bold text-gray-800 mb-3 flex items-center gap-2 text-lg">
-                <span className="text-2xl">👨‍🍳</span>
-                Приготовление
-              </h3>
-              <ol className="space-y-3">
-                {selectedRecipe.steps.map((step, index) => (
-                  <li key={index} className="text-sm text-gray-700 flex items-start gap-3">
-                    <span className="flex-shrink-0 w-6 h-6 rounded-full bg-gradient-to-br from-primary-500 to-primary-600 text-white flex items-center justify-center font-bold text-xs">
-                      {index + 1}
-                    </span>
-                    <span className="flex-1 pt-0.5">{step}</span>
-                  </li>
-                ))}
-              </ol>
-            </div>
-
-            <Button onClick={() => setSelectedRecipe(null)} variant="gradient" className="w-full">
-              Закрыть
-            </Button>
-          </div>
-        </Modal>
+            <DialogFooter className="gap-2 sm:gap-0">
+              <Button onClick={() => setSelectedRecipe(null)} variant="outline" className="flex-1">
+                Закрыть
+              </Button>
+              <Button 
+                onClick={handleCookedAndAte} 
+                className={cn(
+                  "flex-1 gap-2",
+                  cookedSuccess && "bg-green-600 hover:bg-green-600"
+                )}
+                disabled={cookedSuccess}
+              >
+                {cookedSuccess ? (
+                  <>
+                    <Check className="w-4 h-4" />
+                    Добавлено!
+                  </>
+                ) : (
+                  <>
+                    <ChefHat className="w-4 h-4" />
+                    Приготовил и съел
+                  </>
+                )}
+              </Button>
+            </DialogFooter>
+          </DialogContent>
+        </Dialog>
       )}
     </div>
   );
