@@ -1,0 +1,106 @@
+/* Стили для Button компонента в стиле shadcn */
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  font-weight: 600;
+  border-radius: var(--radius);
+  transition: all 0.2s ease;
+  border: none;
+  cursor: pointer;
+  outline: none;
+  white-space: nowrap;
+}
+
+.button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+.button:active:not(:disabled) {
+  transform: scale(0.98);
+}
+
+/* Размеры */
+.sizeSmall {
+  padding: 0.375rem 0.75rem;
+  font-size: 0.875rem;
+  height: 2rem;
+}
+
+.sizeMedium {
+  padding: 0.625rem 1.25rem;
+  font-size: 0.875rem;
+  height: 2.5rem;
+}
+
+.sizeLarge {
+  padding: 0.875rem 1.5rem;
+  font-size: 1rem;
+  height: 3rem;
+}
+
+/* Варианты */
+.variantPrimary {
+  background-color: hsl(var(--primary));
+  color: hsl(var(--primary-foreground));
+  box-shadow: var(--shadow);
+}
+
+.variantPrimary:hover:not(:disabled) {
+  background-color: hsl(var(--primary) / 0.9);
+  box-shadow: var(--shadow-md);
+}
+
+.variantSecondary {
+  background-color: hsl(var(--secondary));
+  color: hsl(var(--secondary-foreground));
+  border: 1px solid hsl(var(--border));
+}
+
+.variantSecondary:hover:not(:disabled) {
+  background-color: hsl(var(--secondary) / 0.8);
+}
+
+.variantDanger {
+  background-color: hsl(var(--destructive));
+  color: hsl(var(--destructive-foreground));
+  box-shadow: var(--shadow);
+}
+
+.variantDanger:hover:not(:disabled) {
+  background-color: hsl(var(--destructive) / 0.9);
+  box-shadow: var(--shadow-md);
+}
+
+.variantGradient {
+  background: linear-gradient(135deg, hsl(var(--primary)) 0%, hsl(var(--primary) / 0.8) 100%);
+  color: hsl(var(--primary-foreground));
+  box-shadow: var(--shadow-lg);
+}
+
+.variantGradient:hover:not(:disabled) {
+  box-shadow: var(--shadow-xl);
+}
+
+.variantGhost {
+  background-color: transparent;
+  color: hsl(var(--primary));
+}
+
+.variantGhost:hover:not(:disabled) {
+  background-color: hsl(var(--accent));
+  color: hsl(var(--accent-foreground));
+}
+
+.icon {
+  font-size: 1.25rem;
+  /* Четкое отображение иконок */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  filter: none;
+  transform: translateZ(0);
+  backface-visibility: hidden;
+}

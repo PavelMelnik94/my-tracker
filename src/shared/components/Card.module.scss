@@ -1,0 +1,45 @@
+/* Стили для Card компонента в стиле shadcn */
+.card {
+  border-radius: calc(var(--radius) * 2);
+  padding: 1.5rem;
+  transition: all 0.3s ease;
+  background-color: hsl(var(--card));
+  color: hsl(var(--card-foreground));
+  border: 1px solid hsl(var(--border));
+  /* ВАЖНО: НЕ используем overflow: hidden, чтобы тени не обрезались */
+  /* Добавляем margin для компенсации теней */
+  margin: 0.25rem;
+}
+
+.cardDefault {
+  box-shadow: var(--shadow);
+}
+
+.cardGlass {
+  background-color: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  box-shadow: var(--shadow-md);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.cardGradient {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.9) 0%, rgba(255, 255, 255, 0.7) 100%);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  box-shadow: var(--shadow-lg);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.cardHover:hover {
+  box-shadow: var(--shadow-xl);
+  transform: translateY(-4px);
+}
+
+.cardClickable {
+  cursor: pointer;
+}
+
+.cardClickable:active {
+  transform: scale(0.98);
+}

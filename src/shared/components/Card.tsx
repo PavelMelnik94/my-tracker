@@ -1,4 +1,5 @@
 import React from 'react';
+import styles from './Card.module.scss';
 
 interface CardProps {
   children: React.ReactNode;
@@ -17,20 +18,18 @@ export const Card: React.FC<CardProps> = ({
   hover = true,
   style
 }) => {
-  const baseClasses = 'rounded-2xl p-5 transition-all duration-300';
-  
-  const variantClasses = {
-    default: 'bg-white shadow-md',
-    glass: 'glass-card',
-    gradient: 'bg-gradient-card backdrop-blur-xl shadow-lg border border-white/30',
-  };
+  const variantClass = {
+    default: styles.cardDefault,
+    glass: styles.cardGlass,
+    gradient: styles.cardGradient,
+  }[variant];
 
-  const hoverClasses = hover ? 'hover:shadow-card-hover hover:-translate-y-1' : '';
-  const clickableClasses = onClick ? 'cursor-pointer active:scale-95' : '';
+  const hoverClass = hover ? styles.cardHover : '';
+  const clickableClass = onClick ? styles.cardClickable : '';
 
   return (
     <div
-      className={`${baseClasses} ${variantClasses[variant]} ${hoverClasses} ${clickableClasses} ${className}`}
+      className={`${styles.card} ${variantClass} ${hoverClass} ${clickableClass} ${className}`}
       onClick={onClick}
       style={style}
     >
