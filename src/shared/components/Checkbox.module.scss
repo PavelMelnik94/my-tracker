@@ -1,0 +1,74 @@
+/* Стили для Checkbox компонента в стиле shadcn */
+.checkboxLabel {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  cursor: pointer;
+  user-select: none;
+}
+
+.checkboxWrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.checkbox {
+  appearance: none;
+  width: 1.5rem;
+  height: 1.5rem;
+  background-color: hsl(var(--background));
+  border: 2px solid hsl(var(--border));
+  border-radius: calc(var(--radius) * 0.75);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  position: relative;
+}
+
+.checkbox:hover {
+  border-color: hsl(var(--ring));
+}
+
+.checkbox:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px hsl(var(--ring) / 0.1);
+}
+
+.checkbox:checked {
+  background-color: hsl(var(--primary));
+  border-color: hsl(var(--primary));
+}
+
+.checkmark {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 1rem;
+  height: 1rem;
+  color: hsl(var(--primary-foreground));
+  opacity: 0;
+  transition: opacity 0.2s ease;
+  pointer-events: none;
+}
+
+.checkbox:checked + .checkmark {
+  opacity: 1;
+}
+
+.labelText {
+  color: hsl(var(--foreground));
+  font-weight: 500;
+  font-size: 0.875rem;
+  transition: all 0.2s ease;
+}
+
+.labelTextChecked {
+  text-decoration: line-through;
+  color: hsl(var(--muted-foreground));
+}
+
+.checkboxLabel:hover .labelText:not(.labelTextChecked) {
+  color: hsl(var(--primary));
+}

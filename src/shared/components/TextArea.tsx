@@ -1,4 +1,5 @@
 import React from 'react';
+import styles from './TextArea.module.scss';
 
 interface TextAreaProps extends React.TextareaHTMLAttributes<HTMLTextAreaElement> {
   label?: string;
@@ -14,22 +15,22 @@ export const TextArea: React.FC<TextAreaProps> = ({
   ...props
 }) => {
   return (
-    <div className="mb-4">
+    <div className={styles.textareaWrapper}>
       {label && (
-        <label className="flex items-center gap-2 text-sm font-semibold text-gray-700 mb-2">
-          {icon && <span className="text-xl">{icon}</span>}
+        <label className={styles.label}>
+          {icon && <span className={styles.labelIcon}>{icon}</span>}
           {label}
         </label>
       )}
       <textarea
-        className={`w-full px-4 py-3 input-modern resize-none ${
-          error ? 'border-red-500 focus:border-red-500 focus:ring-red-100' : ''
+        className={`${styles.textarea} ${
+          error ? styles.textareaError : ''
         } ${className}`}
         {...props}
       />
       {error && (
-        <p className="mt-2 text-sm text-red-500 flex items-center gap-1">
-          <span>⚠️</span> {error}
+        <p className={styles.error}>
+          <span className={styles.errorIcon}>⚠️</span> {error}
         </p>
       )}
     </div>

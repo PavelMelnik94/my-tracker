@@ -1,0 +1,91 @@
+/* Стили для BottomNav компонента в стиле shadcn */
+.nav {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: hsl(var(--background) / 0.8);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border-top: 1px solid hsl(var(--border));
+  z-index: 50;
+  box-shadow: var(--shadow-lg);
+  padding-bottom: env(safe-area-inset-bottom);
+}
+
+.container {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  height: 5rem;
+  max-width: 64rem;
+  margin: 0 auto;
+}
+
+.navLink {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  flex: 1;
+  height: 100%;
+  transition: all 0.3s ease;
+  position: relative;
+  text-decoration: none;
+  color: hsl(var(--muted-foreground));
+}
+
+.navLink:hover {
+  color: hsl(var(--primary));
+}
+
+.navLinkActive {
+  color: hsl(var(--primary));
+}
+
+.activeIndicator {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 3rem;
+  height: 0.25rem;
+  background: hsl(var(--primary));
+  border-radius: 0 0 var(--radius) var(--radius);
+}
+
+.icon {
+  font-size: 1.5rem;
+  margin-bottom: 0.25rem;
+  transition: transform 0.3s ease;
+  /* Четкое отображение иконок */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  filter: none;
+  transform: translateZ(0);
+  backface-visibility: hidden;
+}
+
+.navLinkActive .icon {
+  transform: scale(1.1) translateZ(0);
+}
+
+.navLink:hover .icon:not(.navLinkActive .icon) {
+  transform: scale(1.05) translateZ(0);
+}
+
+.label {
+  font-size: 0.75rem;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.activeBackground {
+  position: absolute;
+  inset: 0;
+  background-color: hsl(var(--accent));
+  border-radius: calc(var(--radius) * 2);
+  z-index: -1;
+  transform: scale(0.9);
+  opacity: 0.5;
+}
