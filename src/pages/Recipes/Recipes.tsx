@@ -81,7 +81,7 @@ export const Recipes: React.FC = () => {
         />
 
         {/* Category filters */}
-        <div className="flex gap-3 overflow-x-auto pb-2 scrollbar-hide">
+        <div className="flex gap-3 overflow-x-auto pb-2">
           {categories.map((cat) => (
             <button
               key={cat.value}

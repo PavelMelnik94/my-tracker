@@ -16,7 +16,7 @@ export const TextArea: React.FC<TextAreaProps> = ({
   return (
     <div className="mb-4">
       {label && (
-        <label className="block text-sm font-semibold text-gray-700 mb-2 flex items-center gap-2">
+        <label className="flex items-center gap-2 text-sm font-semibold text-gray-700 mb-2">
           {icon && <span className="text-xl">{icon}</span>}
           {label}
         </label>
