@@ -1,22 +1,17 @@
-/* Стили для StatCard компонента в стиле shadcn */
+/* Modern StatCard Component - Vibrant and elegant */
 .statCard {
   background-color: hsl(var(--card));
   color: hsl(var(--card-foreground));
-  backdrop-filter: blur(24px);
-  -webkit-backdrop-filter: blur(24px);
-  border-radius: calc(var(--radius) * 2);
-  box-shadow: var(--shadow-md);
+  border-radius: var(--radius);
   border: 1px solid hsl(var(--border));
   padding: 1.5rem;
   text-align: center;
-  transition: all 0.3s ease;
-  /* НЕ используем overflow: hidden для корректного отображения теней */
-  margin: 0.25rem;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .statCard:hover {
-  transform: scale(1.05);
-  box-shadow: var(--shadow-lg);
+  border-color: hsl(var(--accent-blue) / 0.5);
+  transform: translateY(-2px);
 }
 
 .iconWrapper {
@@ -25,51 +20,43 @@
   justify-content: center;
   width: 3.5rem;
   height: 3.5rem;
-  border-radius: calc(var(--radius) * 2);
-  box-shadow: var(--shadow-lg);
-  margin-bottom: 1rem;
-  transition: transform 0.3s ease;
+  border-radius: calc(var(--radius) - 2px);
+  margin-bottom: 0.75rem;
+  transition: transform 0.2s ease;
 }
 
 .statCard:hover .iconWrapper {
-  transform: scale(1.1);
+  transform: scale(1.05);
 }
 
 .iconPrimary {
-  background: linear-gradient(135deg, hsl(var(--primary)) 0%, hsl(var(--primary) / 0.8) 100%);
+  background: linear-gradient(135deg, hsl(var(--accent-blue)) 0%, hsl(var(--accent-blue) / 0.7) 100%);
 }
 
 .iconAccent {
-  background: linear-gradient(135deg, hsl(var(--accent-foreground)) 0%, hsl(var(--accent-foreground) / 0.8) 100%);
+  background: linear-gradient(135deg, hsl(var(--accent-purple)) 0%, hsl(var(--accent-purple) / 0.7) 100%);
 }
 
 .iconSuccess {
-  background: linear-gradient(135deg, hsl(var(--success)) 0%, hsl(var(--success) / 0.8) 100%);
+  background: linear-gradient(135deg, hsl(var(--accent-green)) 0%, hsl(var(--accent-green) / 0.7) 100%);
 }
 
 .iconWarning {
-  background: linear-gradient(135deg, hsl(var(--warning)) 0%, hsl(var(--warning) / 0.8) 100%);
+  background: linear-gradient(135deg, hsl(var(--accent-orange)) 0%, hsl(var(--accent-orange) / 0.7) 100%);
 }
 
 .icon {
   font-size: 2rem;
-  /* Четкое отображение иконок */
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   filter: none;
-  transform: translateZ(0);
-  backface-visibility: hidden;
 }
 
 .value {
   font-size: 2rem;
   font-weight: 700;
   color: hsl(var(--foreground));
-  margin-bottom: 0.5rem;
-  background: linear-gradient(to right, hsl(var(--primary)), hsl(var(--primary) / 0.7));
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+  margin-bottom: 0.25rem;
 }
 
 .label {
@@ -85,7 +72,7 @@
 }
 
 .trendUp {
-  color: hsl(var(--success));
+  color: hsl(var(--accent-green));
 }
 
 .trendDown {

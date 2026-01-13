@@ -84,20 +84,20 @@ export const Dashboard: React.FC = () => {
       <div className="mb-6">
         <div className="flex items-center justify-between mb-2">
           <div>
-            <h1 className="text-3xl font-bold bg-gradient-to-r from-primary-600 to-accent-500 bg-clip-text text-transparent mb-1">
+            <h1 className="text-3xl font-bold gradient-text mb-1">
               Привет! 👋
             </h1>
-            <p className="text-gray-600">{new Date().toLocaleDateString('ru-RU', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })}</p>
+            <p className="text-muted-foreground">{new Date().toLocaleDateString('ru-RU', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })}</p>
           </div>
           {currentStreak > 0 && (
             <div className="text-center">
-              <div className="text-3xl font-bold text-primary-600">🔥</div>
-              <div className="text-sm font-semibold text-gray-600">{currentStreak} дней</div>
+              <div className="text-3xl font-bold">🔥</div>
+              <div className="text-sm font-semibold text-muted-foreground">{currentStreak} дней</div>
             </div>
           )}
         </div>
-        <div className="glass-card p-4 mt-4 bg-gradient-to-r from-primary-50 to-accent-50 border-l-4 border-primary-500 shadow-md">
-          <p className="text-primary-700 font-medium">{randomQuote}</p>
+        <div className="glass-card p-4 mt-4 bg-gradient-to-r from-primary-50 to-accent-50 border-l-4" style={{ borderLeftColor: 'hsl(var(--accent-blue))' }}>
+          <p className="font-medium text-foreground">{randomQuote}</p>
         </div>
       </div>
 
@@ -133,7 +133,7 @@ export const Dashboard: React.FC = () => {
       {latestWellbeing && (
         <Card className="mb-6 animate-slide-up">
           <div className="flex items-center justify-between mb-3">
-            <h2 className="text-lg font-bold text-gray-800 flex items-center gap-2">
+            <h2 className="text-lg font-bold text-foreground flex items-center gap-2">
               <span className="text-2xl">😊</span>
               Самочувствие
             </h2>
@@ -144,23 +144,23 @@ export const Dashboard: React.FC = () => {
           <div className="grid grid-cols-4 gap-3">
             <div className="text-center p-3 rounded-xl bg-gradient-to-br from-yellow-50 to-amber-50">
               <div className="text-2xl mb-1">⚡</div>
-              <div className="text-lg font-bold text-gray-800">{latestWellbeing.energy}/10</div>
-              <div className="text-xs text-gray-600">Энергия</div>
+              <div className="text-lg font-bold text-foreground">{latestWellbeing.energy}/10</div>
+              <div className="text-xs text-muted-foreground">Энергия</div>
             </div>
             <div className="text-center p-3 rounded-xl bg-gradient-to-br from-purple-50 to-indigo-50">
               <div className="text-2xl mb-1">😴</div>
-              <div className="text-lg font-bold text-gray-800">{latestWellbeing.sleep}/10</div>
-              <div className="text-xs text-gray-600">Сон</div>
+              <div className="text-lg font-bold text-foreground">{latestWellbeing.sleep}/10</div>
+              <div className="text-xs text-muted-foreground">Сон</div>
             </div>
             <div className="text-center p-3 rounded-xl bg-gradient-to-br from-pink-50 to-rose-50">
               <div className="text-2xl mb-1">😊</div>
-              <div className="text-lg font-bold text-gray-800">{latestWellbeing.mood}/10</div>
-              <div className="text-xs text-gray-600">Настроение</div>
+              <div className="text-lg font-bold text-foreground">{latestWellbeing.mood}/10</div>
+              <div className="text-xs text-muted-foreground">Настроение</div>
             </div>
             <div className="text-center p-3 rounded-xl bg-gradient-to-br from-blue-50 to-cyan-50">
               <div className="text-2xl mb-1">😌</div>
-              <div className="text-lg font-bold text-gray-800">{latestWellbeing.stress}/10</div>
-              <div className="text-xs text-gray-600">Стресс</div>
+              <div className="text-lg font-bold text-foreground">{latestWellbeing.stress}/10</div>
+              <div className="text-xs text-muted-foreground">Стресс</div>
             </div>
           </div>
         </Card>
@@ -169,7 +169,7 @@ export const Dashboard: React.FC = () => {
       {/* Today's Meals */}
       <Card className="mb-6 animate-slide-up" style={{ animationDelay: '0.1s' }}>
         <div className="flex justify-between items-center mb-4">
-          <h2 className="text-lg font-bold text-gray-800 flex items-center gap-2">
+          <h2 className="text-lg font-bold text-foreground flex items-center gap-2">
             <span className="text-2xl">🍽️</span>
             Питание сегодня
           </h2>
@@ -182,7 +182,7 @@ export const Dashboard: React.FC = () => {
         {todayMeals.length === 0 ? (
           <div className="text-center py-8">
             <div className="text-5xl mb-3">🍽️</div>
-            <p className="text-gray-500">Начни отслеживать питание!</p>
+            <p className="text-muted-foreground">Начни отслеживать питание!</p>
             <Link to="/meals">
               <Button variant="primary" size="sm" className="mt-3">
                 Добавить приём пищи
@@ -207,7 +207,7 @@ export const Dashboard: React.FC = () => {
       {/* Today's Supplements */}
       <Card className="mb-6 animate-slide-up" style={{ animationDelay: '0.2s' }}>
         <div className="flex justify-between items-center mb-4">
-          <h2 className="text-lg font-bold text-gray-800 flex items-center gap-2">
+          <h2 className="text-lg font-bold text-foreground flex items-center gap-2">
             <span className="text-2xl">💊</span>
             Добавки сегодня
           </h2>
@@ -217,7 +217,7 @@ export const Dashboard: React.FC = () => {
         </div>
         {todaySupplements.length === 0 ? (
           <div className="text-center py-6">
-            <p className="text-gray-500">Нет добавок на сегодня</p>
+            <p className="text-muted-foreground">Нет добавок на сегодня</p>
           </div>
         ) : (
           <div className="space-y-3">
