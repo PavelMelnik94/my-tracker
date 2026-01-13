@@ -12,6 +12,8 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  width: 1.5rem;
+  height: 1.5rem;
 }
 
 .checkbox {
@@ -23,7 +25,9 @@
   border-radius: calc(var(--radius) * 0.75);
   cursor: pointer;
   transition: all 0.2s ease;
-  position: relative;
+  position: absolute;
+  top: 0;
+  left: 0;
 }
 
 .checkbox:hover {
@@ -42,18 +46,19 @@
 
 .checkmark {
   position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 1rem;
-  height: 1rem;
+  top: 0;
+  left: 0;
+  width: 1.5rem;
+  height: 1.5rem;
   color: hsl(var(--primary-foreground));
   opacity: 0;
   transition: opacity 0.2s ease;
   pointer-events: none;
+  padding: 0.125rem;
 }
 
-.checkbox:checked + .checkmark {
+/* Показываем галочку когда checkbox checked */
+.checkbox:checked ~ .checkmark {
   opacity: 1;
 }
 

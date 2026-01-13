@@ -40,8 +40,8 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   filter: none;
-  transform: translateY(-50%) translateZ(0);
   backface-visibility: hidden;
+  will-change: transform;
 }
 
 .input {

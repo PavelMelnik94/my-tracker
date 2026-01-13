@@ -6,6 +6,11 @@ interface ModalProps {
   onClose: () => void;
   title: string;
   children: React.ReactNode;
+  /**
+   * Опциональный футер модального окна.
+   * Если не указан, футер не отображается.
+   * Футер фиксируется внизу модального окна.
+   */
   footer?: React.ReactNode;
 }
 
