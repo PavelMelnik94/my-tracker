@@ -89,11 +89,29 @@ export const Meals: React.FC = () => {
     snack3: 'Перекус 3',
   };
 
+  const mealIcons: Record<MealEntry['type'], string> = {
+    breakfast: '🌅',
+    snack1: '🍎',
+    lunch: '🍜',
+    snack2: '🥜',
+    dinner: '🌙',
+    snack3: '🍪',
+  };
+
   return (
-    <div className="max-w-4xl mx-auto p-4 pb-20">
+    <div className="max-w-4xl mx-auto p-4 pb-24 animate-fade-in">
+      {/* Header */}
       <div className="flex justify-between items-center mb-6">
-        <h1 className="text-2xl font-bold text-gray-800">Трекер питания</h1>
-        <Button onClick={() => handleOpenModal()}>+ Добавить</Button>
+        <div>
+          <h1 className="text-3xl font-bold text-gray-800 flex items-center gap-3">
+            <span className="text-4xl">🍽️</span>
+            Питание
+          </h1>
+          <p className="text-gray-600 mt-1">Отслеживай свой рацион</p>
+        </div>
+        <Button onClick={() => handleOpenModal()} variant="gradient" icon="✨">
+          Добавить
+        </Button>
       </div>
 
       {/* Date selector */}
@@ -103,49 +121,76 @@ export const Meals: React.FC = () => {
           value={selectedDate}
           onChange={(e) => setSelectedDate(e.target.value)}
           className="max-w-xs"
+          icon="📅"
         />
       </div>
 
       {/* Total calories */}
-      <Card className="mb-6 text-center">
-        <div className="text-3xl font-bold text-primary">{totalCalories}</div>
-        <div className="text-gray-600">ккал за день</div>
-      </Card>
+      <div className="glass-card p-8 text-center mb-6 bg-gradient-to-br from-primary-50 to-accent-50 animate-slide-up">
+        <div className="text-6xl font-bold bg-gradient-to-r from-primary-600 to-accent-500 bg-clip-text text-transparent mb-2">
+          {totalCalories}
+        </div>
+        <div className="text-gray-600 font-semibold text-lg">ккал за день</div>
+        {totalCalories > 0 && (
+          <div className="mt-3 text-sm text-gray-500">
+            {filteredMeals.filter(m => m.completed).length} из {filteredMeals.length} приёмов пищи
+          </div>
+        )}
+      </div>
 
       {/* Meals list */}
       <div className="space-y-4">
         {filteredMeals.length === 0 ? (
-          <Card>
-            <p className="text-gray-500 text-center">Нет записей за этот день</p>
+          <Card className="text-center py-12">
+            <div className="text-6xl mb-4">🍽️</div>
+            <p className="text-gray-500 text-lg mb-4">Нет записей за этот день</p>
+            <Button onClick={() => handleOpenModal()} variant="primary">
+              Добавить приём пищи
+            </Button>
           </Card>
         ) : (
-          filteredMeals.map((meal) => (
-            <Card key={meal.id}>
+          filteredMeals.map((meal, index) => (
+            <Card 
+              key={meal.id} 
+              className="animate-slide-up"
+              style={{ animationDelay: `${index * 0.05}s` }}
+            >
               <div className="flex items-start justify-between">
                 <div className="flex-1">
-                  <Checkbox
-                    label={mealLabels[meal.type]}
-                    checked={meal.completed}
-                    onChange={() => toggleMealCompleted(meal.id)}
-                  />
-                  <div className="ml-7 mt-2">
-                    <p className="text-sm text-gray-600">Время: {meal.time}</p>
-                    <p className="text-sm text-gray-800 mt-1">{meal.description}</p>
-                    <p className="text-sm font-semibold text-primary mt-1">
-                      {meal.calories} ккал
-                    </p>
+                  <div className="flex items-center gap-3 mb-3">
+                    <span className="text-3xl">{mealIcons[meal.type]}</span>
+                    <Checkbox
+                      label={mealLabels[meal.type]}
+                      checked={meal.completed}
+                      onChange={() => toggleMealCompleted(meal.id)}
+                    />
+                  </div>
+                  <div className="ml-12 space-y-2">
+                    <div className="flex items-center gap-2 text-sm text-gray-600">
+                      <span>🕐</span>
+                      <span className="font-medium">{meal.time}</span>
+                    </div>
+                    {meal.description && (
+                      <p className="text-gray-800">{meal.description}</p>
+                    )}
+                    <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-gradient-to-r from-primary-100 to-accent-100">
+                      <span className="text-lg">🔥</span>
+                      <span className="font-bold text-primary-700">{meal.calories} ккал</span>
+                    </div>
                   </div>
                 </div>
-                <div className="flex space-x-2 ml-4">
+                <div className="flex gap-2 ml-4">
                   <button
                     onClick={() => handleOpenModal(meal)}
-                    className="text-blue-500 hover:text-blue-700"
+                    className="p-2 text-2xl hover:scale-110 transition-transform duration-200"
+                    title="Редактировать"
                   >
                     ✏️
                   </button>
                   <button
                     onClick={() => deleteMeal(meal.id)}
-                    className="text-red-500 hover:text-red-700"
+                    className="p-2 text-2xl hover:scale-110 transition-transform duration-200"
+                    title="Удалить"
                   >
                     🗑️
                   </button>
@@ -163,17 +208,17 @@ export const Meals: React.FC = () => {
         title={editingMeal ? 'Редактировать приём пищи' : 'Добавить приём пищи'}
       >
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">
+          <label className="block text-sm font-semibold text-gray-700 mb-2">
             Тип приёма пищи
           </label>
           <select
             value={formData.type}
             onChange={(e) => setFormData({ ...formData, type: e.target.value as MealEntry['type'] })}
-            className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary mb-4"
+            className="w-full px-4 py-3 input-modern mb-4"
           >
             {Object.entries(mealLabels).map(([key, label]) => (
               <option key={key} value={key}>
-                {label}
+                {mealIcons[key as MealEntry['type']]} {label}
               </option>
             ))}
           </select>
@@ -183,6 +228,7 @@ export const Meals: React.FC = () => {
             label="Время"
             value={formData.time}
             onChange={(e) => setFormData({ ...formData, time: e.target.value })}
+            icon="🕐"
           />
 
           <TextArea
@@ -199,10 +245,11 @@ export const Meals: React.FC = () => {
             value={formData.calories}
             onChange={(e) => setFormData({ ...formData, calories: e.target.value })}
             placeholder="400"
+            icon="🔥"
           />
 
-          <div className="flex space-x-3 mt-6">
-            <Button onClick={handleSubmit} className="flex-1">
+          <div className="flex gap-3 mt-6">
+            <Button onClick={handleSubmit} variant="gradient" className="flex-1">
               {editingMeal ? 'Сохранить' : 'Добавить'}
             </Button>
             <Button onClick={handleCloseModal} variant="secondary" className="flex-1">

@@ -10,7 +10,7 @@ import { BottomNav } from './shared/components/BottomNav';
 function App() {
   return (
     <Router basename="/my-tracker">
-      <div className="min-h-screen bg-gray-50">
+      <div className="min-h-screen bg-gradient-to-br from-slate-50 via-emerald-50/30 to-blue-50/30">
         <Routes>
           <Route path="/" element={<Dashboard />} />
           <Route path="/meals" element={<Meals />} />
