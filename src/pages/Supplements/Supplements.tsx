@@ -50,7 +50,7 @@ export const Supplements: React.FC = () => {
     <div className="max-w-4xl mx-auto p-4 pb-24 animate-fade-in">
       {/* Header */}
       <div className="mb-6">
-        <h1 className="text-3xl font-bold text-gray-800 flex items-center gap-3">
+        <h1 className="text-3xl font-bold flex items-center gap-3 bg-gradient-to-r from-purple-600 to-indigo-600 bg-clip-text text-transparent">
           <span className="text-4xl">💊</span>
           Добавки
         </h1>

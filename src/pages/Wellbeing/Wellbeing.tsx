@@ -138,7 +138,13 @@ export const Wellbeing: React.FC = () => {
 
   return (
     <div className="max-w-4xl mx-auto p-4 pb-20">
-      <h1 className="text-2xl font-bold text-gray-800 mb-6">Дневник самочувствия</h1>
+      <div className="mb-6">
+        <h1 className="text-3xl font-bold flex items-center gap-3 bg-gradient-to-r from-pink-600 to-rose-600 bg-clip-text text-transparent">
+          <span className="text-3xl">😊</span>
+          Дневник самочувствия
+        </h1>
+        <p className="text-gray-600 mt-1">Отслеживай свое состояние каждый день</p>
+      </div>
 
       {/* Date selector */}
       <div className="mb-6">

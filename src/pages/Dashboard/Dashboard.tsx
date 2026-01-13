@@ -84,7 +84,7 @@ export const Dashboard: React.FC = () => {
       <div className="mb-6">
         <div className="flex items-center justify-between mb-2">
           <div>
-            <h1 className="text-3xl font-bold text-gray-800 mb-1">
+            <h1 className="text-3xl font-bold bg-gradient-to-r from-primary-600 to-accent-500 bg-clip-text text-transparent mb-1">
               Привет! 👋
             </h1>
             <p className="text-gray-600">{new Date().toLocaleDateString('ru-RU', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })}</p>
@@ -96,7 +96,7 @@ export const Dashboard: React.FC = () => {
             </div>
           )}
         </div>
-        <div className="glass-card p-4 mt-4 bg-gradient-to-r from-primary-50 to-accent-50 border-l-4 border-primary-500">
+        <div className="glass-card p-4 mt-4 bg-gradient-to-r from-primary-50 to-accent-50 border-l-4 border-primary-500 shadow-md">
           <p className="text-primary-700 font-medium">{randomQuote}</p>
         </div>
       </div>

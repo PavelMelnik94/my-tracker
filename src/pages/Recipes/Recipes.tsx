@@ -42,6 +42,13 @@ export const Recipes: React.FC = () => {
     snack: 'Перекусы',
   };
 
+  const categoryColors: Record<Recipe['category'], string> = {
+    breakfast: 'bg-amber-500 text-white',
+    lunch: 'bg-emerald-500 text-white',
+    dinner: 'bg-blue-500 text-white',
+    snack: 'bg-purple-500 text-white',
+  };
+
   const categories: Array<{ value: Recipe['category'] | 'all'; label: string }> = [
     { value: 'all', label: 'Все' },
     { value: 'breakfast', label: 'Завтраки' },
@@ -65,8 +72,8 @@ export const Recipes: React.FC = () => {
     <div className="max-w-4xl mx-auto p-4 pb-24">
       {/* Header */}
       <div className="mb-6">
-        <h1 className="text-3xl font-bold flex items-center gap-3">
-          <ChefHat className="w-8 h-8" />
+        <h1 className="text-3xl font-bold flex items-center gap-3 bg-gradient-to-r from-primary to-emerald-500 bg-clip-text text-transparent">
+          <ChefHat className="w-8 h-8 text-primary" />
           Рецепты
         </h1>
         <p className="text-muted-foreground mt-1">Здоровая еда на каждый день</p>
@@ -119,11 +126,14 @@ export const Recipes: React.FC = () => {
             <Card
               key={recipe.id}
               onClick={() => setSelectedRecipe(recipe)}
-              className="cursor-pointer hover:shadow-lg transition-shadow"
+              className="cursor-pointer hover:shadow-xl hover:scale-[1.02] transition-all duration-300 border-2 hover:border-primary/50"
             >
               <CardHeader>
                 <div className="mb-2">
-                  <span className="inline-flex items-center gap-1.5 px-3 py-1 text-xs font-semibold bg-primary text-primary-foreground rounded-full">
+                  <span className={cn(
+                    "inline-flex items-center gap-1.5 px-3 py-1 text-xs font-semibold rounded-full",
+                    categoryColors[recipe.category]
+                  )}>
                     {categoryLabels[recipe.category]}
                   </span>
                 </div>
@@ -184,7 +194,10 @@ export const Recipes: React.FC = () => {
             <DialogHeader>
               <DialogTitle className="text-2xl pr-8">{selectedRecipe.name}</DialogTitle>
               <div className="mt-2">
-                <span className="inline-flex items-center gap-1.5 px-3 py-1 text-sm font-semibold bg-primary text-primary-foreground rounded-full">
+                <span className={cn(
+                  "inline-flex items-center gap-1.5 px-3 py-1 text-sm font-semibold rounded-full",
+                  categoryColors[selectedRecipe.category]
+                )}>
                   {categoryLabels[selectedRecipe.category]}
                 </span>
               </div>
