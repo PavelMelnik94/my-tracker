@@ -4,6 +4,27 @@ import { Card, Button, Modal, Input, TextArea } from '../../shared/components';
 import { getTodayDate, generateId } from '../../shared/utils/date';
 import type { WellbeingEntry, MeasurementEntry } from '../../shared/types';
 
+const RatingSlider: React.FC<{
+  label: string;
+  value: number;
+  onChange: (value: number) => void;
+}> = ({ label, value, onChange }) => (
+  <div className="mb-4">
+    <div className="flex justify-between mb-2">
+      <label className="text-sm font-medium text-gray-700">{label}</label>
+      <span className="text-sm font-semibold text-primary">{value}/10</span>
+    </div>
+    <input
+      type="range"
+      min="1"
+      max="10"
+      value={value}
+      onChange={(e) => onChange(parseInt(e.target.value))}
+      className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-primary"
+    />
+  </div>
+);
+
 export const Wellbeing: React.FC = () => {
   const { wellbeing, measurements, addWellbeing, addMeasurement, updateWellbeing, updateMeasurement } =
     useHealthStore();
@@ -115,30 +136,15 @@ export const Wellbeing: React.FC = () => {
     setIsMeasurementModalOpen(false);
   };
 
-  const RatingSlider: React.FC<{
-    label: string;
-    value: number;
-    onChange: (value: number) => void;
-  }> = ({ label, value, onChange }) => (
-    <div className="mb-4">
-      <div className="flex justify-between mb-2">
-        <label className="text-sm font-medium text-gray-700">{label}</label>
-        <span className="text-sm font-semibold text-primary">{value}/10</span>
-      </div>
-      <input
-        type="range"
-        min="1"
-        max="10"
-        value={value}
-        onChange={(e) => onChange(parseInt(e.target.value))}
-        className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-primary"
-      />
-    </div>
-  );
-
   return (
     <div className="max-w-4xl mx-auto p-4 pb-20">
-      <h1 className="text-2xl font-bold text-gray-800 mb-6">Дневник самочувствия</h1>
+      <div className="mb-6">
+        <h1 className="text-3xl font-bold flex items-center gap-3 bg-gradient-to-r from-pink-600 to-rose-600 bg-clip-text text-transparent">
+          <span className="text-3xl">😊</span>
+          Дневник самочувствия
+        </h1>
+        <p className="text-gray-600 mt-1">Отслеживай свое состояние каждый день</p>
+      </div>
 
       {/* Date selector */}
       <div className="mb-6">

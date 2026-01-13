@@ -89,6 +89,15 @@ export const Meals: React.FC = () => {
     snack3: 'Перекус 3',
   };
 
+  const mealColors: Record<MealEntry['type'], string> = {
+    breakfast: 'bg-amber-100 text-amber-800 border-amber-300',
+    snack1: 'bg-green-100 text-green-800 border-green-300',
+    lunch: 'bg-blue-100 text-blue-800 border-blue-300',
+    snack2: 'bg-purple-100 text-purple-800 border-purple-300',
+    dinner: 'bg-indigo-100 text-indigo-800 border-indigo-300',
+    snack3: 'bg-pink-100 text-pink-800 border-pink-300',
+  };
+
   const mealIcons: Record<MealEntry['type'], string> = {
     breakfast: '🌅',
     snack1: '🍎',
@@ -103,7 +112,7 @@ export const Meals: React.FC = () => {
       {/* Header */}
       <div className="flex justify-between items-center mb-6">
         <div>
-          <h1 className="text-3xl font-bold text-gray-800 flex items-center gap-3">
+          <h1 className="text-3xl font-bold flex items-center gap-3 bg-gradient-to-r from-orange-600 to-red-600 bg-clip-text text-transparent">
             <span className="text-4xl">🍽️</span>
             Питание
           </h1>
@@ -152,7 +161,7 @@ export const Meals: React.FC = () => {
           filteredMeals.map((meal, index) => (
             <Card 
               key={meal.id} 
-              className="animate-slide-up"
+              className={`animate-slide-up border-l-4 ${mealColors[meal.type]}`}
               style={{ animationDelay: `${index * 0.05}s` }}
             >
               <div className="flex items-start justify-between">

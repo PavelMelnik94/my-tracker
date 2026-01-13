@@ -211,8 +211,8 @@ export const Analytics: React.FC = () => {
   return (
     <div className="max-w-4xl mx-auto p-4 pb-20">
       <div className="mb-6">
-        <h1 className="text-3xl font-bold flex items-center gap-3">
-          <BarChart3 className="w-8 h-8" />
+        <h1 className="text-3xl font-bold flex items-center gap-3 bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+          <BarChart3 className="w-8 h-8 text-blue-600" />
           Аналитика и прогресс
         </h1>
         <p className="text-muted-foreground mt-1">Отслеживайте свои показатели здоровья</p>
