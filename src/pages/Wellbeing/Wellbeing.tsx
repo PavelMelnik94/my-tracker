@@ -1,8 +1,8 @@
 import React, { useState, useMemo } from 'react';
-import { useHealthStore } from '../../store/healthStore';
+import { useHealthStore } from '../../entities/health';
 import { Card, Button, Modal, Input, TextArea } from '../../shared/components';
 import { getTodayDate, generateId } from '../../shared/utils/date';
-import type { WellbeingEntry, MeasurementEntry } from '../../types';
+import type { WellbeingEntry, MeasurementEntry } from '../../shared/types';
 
 export const Wellbeing: React.FC = () => {
   const { wellbeing, measurements, addWellbeing, addMeasurement, updateWellbeing, updateMeasurement } =

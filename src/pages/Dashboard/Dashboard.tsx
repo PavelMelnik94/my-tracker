@@ -1,6 +1,6 @@
 import React, { useMemo } from 'react';
 import { Link } from 'react-router-dom';
-import { useHealthStore } from '../../store/healthStore';
+import { useHealthStore } from '../../entities/health';
 import { Card, Checkbox, Button, StatCard } from '../../shared/components';
 import { getTodayDate } from '../../shared/utils/date';
 

@@ -1,8 +1,8 @@
 import React, { useState, useMemo } from 'react';
-import { useHealthStore } from '../../store/healthStore';
+import { useHealthStore } from '../../entities/health';
 import { Card, Button, Modal, Input, TextArea, Checkbox } from '../../shared/components';
 import { getTodayDate, formatTime, generateId } from '../../shared/utils/date';
-import type { MealEntry } from '../../types';
+import type { MealEntry } from '../../shared/types';
 
 export const Meals: React.FC = () => {
   const { meals, addMeal, updateMeal, toggleMealCompleted, deleteMeal } = useHealthStore();

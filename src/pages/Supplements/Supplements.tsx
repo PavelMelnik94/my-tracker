@@ -1,8 +1,8 @@
 import React, { useState, useMemo } from 'react';
-import { useHealthStore } from '../../store/healthStore';
+import { useHealthStore } from '../../entities/health';
 import { Card, Button, Checkbox, Input } from '../../shared/components';
 import { getTodayDate, formatTime, generateId } from '../../shared/utils/date';
-import type { SupplementEntry } from '../../types';
+import type { SupplementEntry } from '../../shared/types';
 
 export const Supplements: React.FC = () => {
   const { supplements, addSupplement, toggleSupplementTaken } = useHealthStore();
