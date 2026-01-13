@@ -6,6 +6,7 @@ interface CardProps {
   onClick?: () => void;
   variant?: 'default' | 'glass' | 'gradient';
   hover?: boolean;
+  style?: React.CSSProperties;
 }
 
 export const Card: React.FC<CardProps> = ({ 
@@ -13,7 +14,8 @@ export const Card: React.FC<CardProps> = ({
   className = '', 
   onClick,
   variant = 'glass',
-  hover = true
+  hover = true,
+  style
 }) => {
   const baseClasses = 'rounded-2xl p-5 transition-all duration-300';
   
@@ -30,6 +32,7 @@ export const Card: React.FC<CardProps> = ({
     <div
       className={`${baseClasses} ${variantClasses[variant]} ${hoverClasses} ${clickableClasses} ${className}`}
       onClick={onClick}
+      style={style}
     >
       {children}
     </div>
