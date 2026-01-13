@@ -5,12 +5,12 @@ import { Supplements } from './pages/Supplements';
 import { Wellbeing } from './pages/Wellbeing';
 import { Recipes } from './pages/Recipes';
 import { Analytics } from './pages/Analytics';
-import { BottomNav } from './shared/components/BottomNav';
+import { BottomNav } from './widgets/navigation';
 
 function App() {
   return (
     <Router basename="/my-tracker">
-      <div className="min-h-screen bg-gradient-to-br from-slate-50 via-emerald-50/30 to-blue-50/30">
+      <div className="min-h-screen bg-background">
         <Routes>
           <Route path="/" element={<Dashboard />} />
           <Route path="/meals" element={<Meals />} />
