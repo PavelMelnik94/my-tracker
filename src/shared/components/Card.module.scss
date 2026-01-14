@@ -1,39 +1,34 @@
-/* Стили для Card компонента в стиле shadcn */
+/* Modern Card Component - HeroUI/RadixUI inspired */
 .card {
-  border-radius: calc(var(--radius) * 2);
+  border-radius: var(--radius);
   padding: 1.5rem;
-  transition: all 0.3s ease;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
   background-color: hsl(var(--card));
   color: hsl(var(--card-foreground));
   border: 1px solid hsl(var(--border));
-  /* ВАЖНО: НЕ используем overflow: hidden, чтобы тени не обрезались */
-  /* Добавляем margin для компенсации теней */
-  margin: 0.25rem;
+  box-shadow: none;
 }
 
 .cardDefault {
-  box-shadow: var(--shadow);
+  /* Clean, no shadow by default */
 }
 
 .cardGlass {
-  background-color: rgba(255, 255, 255, 0.8);
-  backdrop-filter: blur(24px);
-  -webkit-backdrop-filter: blur(24px);
-  box-shadow: var(--shadow-md);
-  border: 1px solid rgba(255, 255, 255, 0.3);
+  background-color: hsl(var(--card) / 0.5);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid hsl(var(--border) / 0.5);
 }
 
 .cardGradient {
-  background: linear-gradient(135deg, rgba(255, 255, 255, 0.9) 0%, rgba(255, 255, 255, 0.7) 100%);
-  backdrop-filter: blur(24px);
-  -webkit-backdrop-filter: blur(24px);
-  box-shadow: var(--shadow-lg);
-  border: 1px solid rgba(255, 255, 255, 0.3);
+  background: linear-gradient(135deg, hsl(var(--card)) 0%, hsl(var(--muted)) 100%);
+  border: 1px solid hsl(var(--border));
 }
 
 .cardHover:hover {
-  box-shadow: var(--shadow-xl);
-  transform: translateY(-4px);
+  border-color: hsl(var(--accent-blue));
+  box-shadow: 0 0 0 1px hsl(var(--accent-blue) / 0.1);
+  transform: translateY(-1px);
 }
 
 .cardClickable {
@@ -41,5 +36,5 @@
 }
 
 .cardClickable:active {
-  transform: scale(0.98);
+  transform: scale(0.99);
 }

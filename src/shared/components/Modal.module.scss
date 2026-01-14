@@ -1,4 +1,4 @@
-/* Стили для Modal компонента в стиле shadcn */
+/* Modern Modal Component - Opaque and elegant */
 .overlay {
   position: fixed;
   inset: 0;
@@ -6,16 +6,16 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  animation: fadeIn 0.2s ease-in-out;
+  animation: fadeIn 0.15s ease-in-out;
   padding: 1rem;
 }
 
 .backdrop {
   position: absolute;
   inset: 0;
-  background-color: rgba(0, 0, 0, 0.6);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
+  background-color: rgba(0, 0, 0, 0.85);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
 }
 
 .modal {
@@ -24,15 +24,13 @@
   color: hsl(var(--popover-foreground));
   max-width: 32rem;
   width: 100%;
-  border-radius: calc(var(--radius) * 2);
-  box-shadow: var(--shadow-2xl);
+  border-radius: var(--radius);
   border: 1px solid hsl(var(--border));
-  /* ИСПРАВЛЕНИЕ: НЕ используем overflow: hidden для корректного отображения теней */
-  /* Вместо этого делаем overflow только для body */
   display: flex;
   flex-direction: column;
   max-height: calc(100vh - 2rem);
-  animation: slideUp 0.3s ease-out;
+  animation: slideUp 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.5), 0 8px 10px -6px rgb(0 0 0 / 0.4);
 }
 
 .header {
@@ -41,15 +39,14 @@
   align-items: center;
   padding: 1.5rem;
   border-bottom: 1px solid hsl(var(--border));
-  /* Фиксируем header */
   flex-shrink: 0;
   background-color: hsl(var(--popover));
-  border-radius: calc(var(--radius) * 2) calc(var(--radius) * 2) 0 0;
+  border-radius: var(--radius) var(--radius) 0 0;
 }
 
 .title {
   font-size: 1.25rem;
-  font-weight: 700;
+  font-weight: 600;
   color: hsl(var(--foreground));
   margin: 0;
 }
@@ -60,13 +57,13 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  border-radius: var(--radius);
+  border-radius: calc(var(--radius) - 4px);
   border: none;
   background-color: transparent;
   color: hsl(var(--muted-foreground));
   font-size: 1.5rem;
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: all 0.15s ease;
   line-height: 1;
   padding: 0;
 }
@@ -78,19 +75,18 @@
 
 .body {
   padding: 1.5rem;
-  /* ИСПРАВЛЕНИЕ: добавляем overflow-y: auto для прокрутки содержимого */
   overflow-y: auto;
   overflow-x: hidden;
   flex-grow: 1;
+  background-color: hsl(var(--popover));
 }
 
 .footer {
   padding: 1.5rem;
   border-top: 1px solid hsl(var(--border));
-  /* Фиксируем footer внизу */
   flex-shrink: 0;
   background-color: hsl(var(--popover));
-  border-radius: 0 0 calc(var(--radius) * 2) calc(var(--radius) * 2);
+  border-radius: 0 0 var(--radius) var(--radius);
 }
 
 @keyframes fadeIn {
@@ -104,11 +100,11 @@
 
 @keyframes slideUp {
   from {
-    transform: translateY(20px);
+    transform: translateY(16px) scale(0.98);
     opacity: 0;
   }
   to {
-    transform: translateY(0);
+    transform: translateY(0) scale(1);
     opacity: 1;
   }
 }

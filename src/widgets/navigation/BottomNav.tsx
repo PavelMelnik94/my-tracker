@@ -14,7 +14,7 @@ const navItems = [
 
 export const BottomNav: React.FC = () => {
   return (
-    <nav className="fixed bottom-0 left-0 right-0 bg-background border-t border-border z-50 safe-area-bottom">
+    <nav className="fixed bottom-0 left-0 right-0 bg-card border-t border-border z-50 safe-area-bottom backdrop-blur-xl">
       <div className="grid grid-cols-6 h-16">
         {navItems.map(({ path, icon: Icon, label }) => (
           <NavLink
